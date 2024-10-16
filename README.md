@@ -21,7 +21,7 @@ A simple web application built using Laravel for managing members of a Scrabble 
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/scrabble-club.git
+   git clone https://github.com/MH4Helal/scrabble-club.git
    cd scrabble-club
    ```
 
