@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\LeaderboardController;
+
+Route::resource('members', MemberController::class);
+Route::get('leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard.index');

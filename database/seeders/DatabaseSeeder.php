@@ -2,22 +2,21 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Member;
+use App\Models\Game;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
-    public function run(): void
+    public function run()
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // Create 20 members
+        Member::factory(20)->create()->each(function ($member) {
+            // Create 10 games for each member and associate scores
+            Game::factory(10)->create()->each(function ($game) use ($member) {
+                // Attach the member to each game with a random score
+                $member->games()->attach($game->id, ['score' => rand(50, 500)]);
+            });
+        });
     }
 }
