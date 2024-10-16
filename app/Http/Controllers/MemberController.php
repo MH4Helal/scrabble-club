@@ -6,59 +6,34 @@ use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $members = Member::all();
+        return view('members.index', compact('members'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function show($id)
     {
-        //
+        $member = Member::findOrFail($id);
+        $recentGames = $member->games()->latest()->take(5)->get();
+        return view('members.show', compact('member', 'recentGames'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function edit($id)
     {
-        //
+        $member = Member::findOrFail($id);
+        return view('members.edit', compact('member'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function update(Request $request, $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $member = Member::findOrFail($id);
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:members,email,'.$member->id,
+            'phone' => 'nullable',
+        ]);
+        $member->update($request->all());
+        return redirect()->route('members.show', $member->id)->with('success', 'Member updated successfully');
     }
 }
