@@ -92,6 +92,7 @@ A simple web application built using Laravel for managing members of a Scrabble 
 2. **Access the application:**
 
    - Navigate to `http://localhost:8000/members` to view the list of members.
+   - Navigate to `http://localhost:8000/leaderboard` to view the current leaderboard.
    - You can view, edit, and update member details from this page.
 
 ## Features
